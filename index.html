@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UrbanSnapshot Sustentabilidad · BBVA + BoldOS</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='0,0 19,0 32,16 19,32 0,32 13,16' fill='%231464A5'/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="chevron"></div>
+    <div>
+      <div class="brand-title">UrbanSnapshot Sustentabilidad</div>
+      <div class="brand-sub">Inteligencia multitemporal para Instituciones y Real Estate</div>
+    </div>
+  </div>
+  <div class="powered">Powered by <strong>BoldOS</strong> · Daredevil + Thot</div>
+</header>
+
+<div class="mode-switcher">
+  <label>Caso de uso</label>
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-modo="instituciones">🏛️ Instituciones</button>
+    <button class="mode-tab" data-modo="real_estate">🏢 Real Estate</button>
+  </div>
+  <select class="selector-entidad" id="selector-entidad"></select>
+  <div class="contexto-entidad" id="contexto-entidad"></div>
+</div>
+
+<main>
+  <section class="score-card" id="score-card"></section>
+
+  <div class="right-col">
+
+    <div class="panel">
+      <h3>KPIs ambientales <span class="tag">sensorización multitemporal</span></h3>
+      <div class="kpi-grid" id="kpi-grid"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Histórico multitemporal 2015–2025 <span class="tag">Daredevil</span></h3>
+      <div class="chart-controls" id="chart-controls"></div>
+      <div id="chart-area"></div>
+    </div>
+
+    <div class="panel" id="panel-peers">
+      <h3>Peer benchmarking · clúster Madrid <span class="tag">Thot</span></h3>
+      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
+        Score compuesto comparado con capitales españolas de perfil similar, calculado con los mismos parámetros de normalización.
+      </p>
+      <div class="peer-list" id="peer-list"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Retos descubiertos <span class="tag">Thot</span></h3>
+      <div class="finding-list" id="finding-list"></div>
+      <div class="strengths">
+        <h6>Fortalezas identificadas</h6>
+        <ul id="strengths-list"></ul>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Recomendaciones <span class="tag">Thot</span></h3>
+      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
+        Acciones priorizadas generadas sobre las brechas detectadas vs. óptimo normativo y clúster de referencia.
+      </p>
+      <div class="reco-list" id="reco-list"></div>
+    </div>
+
+    <div class="panel" id="panel-best">
+      <h3>Mejores prácticas del clúster <span class="tag">peer learning</span></h3>
+      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
+        Municipios del clúster que superan a Madrid en al menos un KPI, con la práctica asociada inferida por BoldOS.
+      </p>
+      <div class="best-list" id="best-list"></div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <strong>UrbanSnapshot Sustentabilidad</strong> · Prototipo desarrollado por Bold para BBVA — demo con datos ilustrativos<br>
+  Capa Daredevil: sensorización multitemporal de fenómenos ambientales · Capa Thot: scoring, benchmarking, recomendaciones
+</footer>
+
+<script src="data.js"></script>
+<script src="scoring.js"></script>
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

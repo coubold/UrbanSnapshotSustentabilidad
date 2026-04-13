@@ -9,9 +9,10 @@ const STATE = {
 };
 
 function entidadActual() {
-  return STATE.modo === "instituciones"
-    ? MUNICIPIOS[STATE.entidadId]
-    : ACTIVOS[STATE.entidadId];
+  if (STATE.modo === "instituciones") {
+    return hidratar(MUNICIPIOS[STATE.entidadId]);
+  }
+  return ACTIVOS[STATE.entidadId];
 }
 
 // ---------- Score card ----------
@@ -94,6 +95,7 @@ function renderKPIs() {
     card.addEventListener("click", () => {
       STATE.kpiActivo = card.dataset.kpi;
       renderHistorico();
+      renderHotspots();
     });
   });
 }
@@ -115,6 +117,7 @@ function renderHistorico() {
     btn.addEventListener("click", () => {
       STATE.kpiActivo = btn.dataset.k;
       renderHistorico();
+      renderHotspots();
     });
   });
 }
@@ -124,12 +127,12 @@ function renderPeers() {
   const panel = document.getElementById("panel-peers");
   if (STATE.modo !== "instituciones") { panel.style.display = "none"; return; }
   panel.style.display = "";
-  const ranking = rankingPares();
+  const ranking = rankingPares(STATE.entidadId);
   document.getElementById("peer-list").innerHTML = ranking.map((p,i) => `
     <div class="peer-row ${p.esTarget ? 'target' : ''}">
       <div class="peer-rank">#${i+1}</div>
       <div>
-        <div class="peer-name">${p.nombre} ${p.esTarget ? '<span style="color:#1464A5">← tu municipio</span>' : ''}</div>
+        <div class="peer-name">${p.nombre} ${p.esTarget ? '<span style="color:#1464A5">← seleccionado</span>' : ''}</div>
         <div class="peer-pop">${(p.poblacion/1000000).toFixed(2)} M hab</div>
       </div>
       <div></div>
@@ -170,18 +173,90 @@ function renderRecos() {
 
 // ---------- Mejores prácticas (solo Instituciones) ----------
 function renderBestPractices() {
+  const ent = entidadActual();
   const panel = document.getElementById("panel-best");
   if (STATE.modo !== "instituciones") { panel.style.display = "none"; return; }
   panel.style.display = "";
-  const list = mejoresPracticas();
+  const list = mejoresPracticas(ent);
+  // Actualizar título del panel dinámicamente
+  const titulo = panel.querySelector("h3");
+  titulo.innerHTML = `Mejores prácticas del clúster <span class="tag">peer learning</span>`;
+  const subtitulo = panel.querySelector("p");
+  subtitulo.textContent = `Municipios del clúster que superan a ${ent.nombre} en al menos un KPI, con la práctica asociada inferida por BoldOS.`;
   document.getElementById("best-list").innerHTML = list.length === 0
-    ? `<div class="best-item"><h6>Madrid lidera en todos los KPIs del clúster</h6></div>`
+    ? `<div class="best-item"><h6>${ent.nombre} lidera en todos los KPIs del clúster</h6></div>`
     : list.map(p => `
         <div class="best-item">
-          <div class="lider">Referente: ${p.lider} · +${p.delta} pts vs Madrid</div>
+          <div class="lider">Referente: ${p.lider} · +${p.delta} pts vs ${ent.nombre}</div>
           <h6>${KPI_ICONOS[p.kpi]} ${p.label}</h6>
           <p>Adoptar ${p.accion}.</p>
         </div>`).join("");
+}
+
+// ---------- Hotspots de distritos (solo Madrid) ----------
+function renderHotspots() {
+  const ent = entidadActual();
+  const panel = document.getElementById("panel-hotspots");
+  if (STATE.modo !== "instituciones" || !ent.hotspots) { panel.style.display = "none"; return; }
+  panel.style.display = "";
+  const hs = ent.hotspots[STATE.kpiActivo];
+  const kpi = ent.kpis[STATE.kpiActivo];
+  const dir = kpi.direccion === "menor_es_mejor";
+  document.getElementById("hotspot-title").textContent = `${KPI_ICONOS[STATE.kpiActivo]} ${kpi.label} · distritos`;
+  document.getElementById("hotspot-mejores").innerHTML = hs.mejores.map((d,i) => `
+    <div class="hotspot-row best">
+      <span class="hs-rank">#${i+1}</span>
+      <span class="hs-name">${d.distrito}</span>
+      <span class="hs-val">${d.valor} <span class="hs-unit">${d.unidad}</span></span>
+    </div>`).join("");
+  document.getElementById("hotspot-peores").innerHTML = hs.peores.map((d,i) => `
+    <div class="hotspot-row worst">
+      <span class="hs-rank">#${i+1}</span>
+      <span class="hs-name">${d.distrito}</span>
+      <span class="hs-val">${d.valor} <span class="hs-unit">${d.unidad}</span></span>
+    </div>`).join("");
+  document.getElementById("hotspot-subtitle").textContent =
+    `Top 3 ${dir ? 'con menor valor' : 'con mayor valor'} (mejores) vs top 3 ${dir ? 'con mayor valor' : 'con menor valor'} (peores) · brecha intra-municipio`;
+}
+
+// ---------- Plan de inversión para mejorar el score ----------
+function renderPlanInversion() {
+  const ent = entidadActual();
+  const panel = document.getElementById("panel-inversion");
+  if (!ent.plan_inversion) { panel.style.display = "none"; return; }
+  panel.style.display = "";
+  const score = scoreCompuesto(ent.kpis);
+  const cal = calificacion(score);
+  const pi = ent.plan_inversion;
+  document.getElementById("inversion-content").innerHTML = `
+    <div class="escenario">
+      <div class="esc-header">
+        <div><div class="esc-label">Escenario 1 · pasar a grado B</div><div class="esc-score">De ${cal.letra} (${score}) a B (${score + parseInt(pi.c_a_b.puntos_score)})</div></div>
+        <div class="esc-monto"><div>${pi.c_a_b.monto}</div><div class="esc-plazo">${pi.c_a_b.plazo} · ${pi.c_a_b.puntos_score} pts</div></div>
+      </div>
+      <ul class="esc-partidas">${pi.c_a_b.partidas.map(p => `<li>${p}</li>`).join("")}</ul>
+    </div>
+    <div class="escenario premium">
+      <div class="esc-header">
+        <div><div class="esc-label">Escenario 2 · alcanzar grado A</div><div class="esc-score">De B (${score + parseInt(pi.c_a_b.puntos_score)}) a A (${score + parseInt(pi.c_a_b.puntos_score) + parseInt(pi.b_a_a.puntos_score)})</div></div>
+        <div class="esc-monto"><div>${pi.b_a_a.monto}</div><div class="esc-plazo">${pi.b_a_a.plazo} · ${pi.b_a_a.puntos_score} pts</div></div>
+      </div>
+      <ul class="esc-partidas">${pi.b_a_a.partidas.map(p => `<li>${p}</li>`).join("")}</ul>
+    </div>
+    <div class="inversion-total">
+      <div>
+        <div class="inv-label">Inversión total estimada para grado A</div>
+        <div class="inv-nota">Financiable vía Sustainability-Linked Loan + Green Bond, con verificación multitemporal BoldOS por KPI.</div>
+      </div>
+      <div class="inv-monto">${sumarMontos(pi.c_a_b.monto, pi.b_a_a.monto)}</div>
+    </div>`;
+}
+
+function sumarMontos(a, b) {
+  const parse = s => parseFloat(s.replace(",", ".").replace(/[^\d.]/g, ""));
+  const total = parse(a) + parse(b);
+  const unit = a.includes("M€") ? "M€" : "€";
+  return total.toFixed(1).replace(".", ",") + " " + unit;
 }
 
 // ---------- Selector de entidad ----------
@@ -189,9 +264,21 @@ function renderSelector() {
   const select = document.getElementById("selector-entidad");
   const ctx = document.getElementById("contexto-entidad");
   if (STATE.modo === "instituciones") {
-    select.innerHTML = `<option value="madrid">Ayuntamiento de Madrid</option>`;
-    select.disabled = true;
-    ctx.innerHTML = `<span>Caso demo · datos 2015–2025 por sensorización multitemporal</span>`;
+    // Orden: Madrid primero, luego por población descendente
+    const ordenados = Object.values(MUNICIPIOS).sort((a,b) => {
+      if (a.id === "madrid") return -1;
+      if (b.id === "madrid") return 1;
+      return b.poblacion - a.poblacion;
+    });
+    select.innerHTML = ordenados.map(m =>
+      `<option value="${m.id}" ${m.id === STATE.entidadId ? 'selected' : ''}>Ayuntamiento de ${m.nombre}${m.id === "madrid" ? ' · caso demo' : ''}</option>`
+    ).join("");
+    select.disabled = false;
+    const ent = MUNICIPIOS[STATE.entidadId];
+    const demo = STATE.entidadId === "madrid"
+      ? "datos 2015–2025 por sensorización multitemporal"
+      : "KPIs sensorizados · resto de datos inferidos por BoldOS";
+    ctx.innerHTML = `<span><strong>${(ent.poblacion/1000000).toFixed(2)} M</strong> habitantes · ${demo}</span>`;
   } else {
     select.innerHTML = Object.values(ACTIVOS).map(a =>
       `<option value="${a.id}" ${a.id === STATE.entidadId ? 'selected' : ''}>${a.nombre} · ${a.tipo}</option>`
@@ -208,10 +295,12 @@ function render() {
   renderScoreCard();
   renderKPIs();
   renderHistorico();
+  renderHotspots();
   renderPeers();
   renderFindings();
   renderRecos();
   renderBestPractices();
+  renderPlanInversion();
 }
 
 // ---------- Bootstrap ----------

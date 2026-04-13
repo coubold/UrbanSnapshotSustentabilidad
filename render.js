@@ -93,7 +93,7 @@
     return `
       <div class="drivers-section">
         <div class="drivers">
-          <div class="drivers-title">Drivers del score</div>
+          <div class="drivers-title">Drivers del score · Explicación analítica</div>
           <div class="drivers-sub">Por qué el score es <strong>${m.score}</strong> y no otro: aporte de cada pilar vs. media del peer group (suma neta ${netSign}${net} pts)</div>
           <div class="drivers-grid">${rowsHtml}</div>
         </div>
@@ -323,7 +323,7 @@
     return `
       <div class="financial-section">
         <div class="financial-head">
-          <h2>Financial Layer · Traducción a decisión bancaria</h2>
+          <h2>Implicancias financieras</h2>
           <div class="aux">Estimación BoldOS · Output para mesa de crédito institucional</div>
         </div>
         <div class="financial-grid">
@@ -385,15 +385,15 @@
       renderTagline(),
       renderExecutive(m),
       renderHeader(m),
-      renderDrivers(m),
       renderFinancial(m),
+      renderDecision(m),
+      renderDrivers(m),
       renderPillars(m),
       renderKPIs(m),
       renderBench(m, id),
       renderInsights(m),
       renderAlerts(m),
       renderRecs(m),
-      renderDecision(m),
       renderRetos(m)
     ].join('');
 

@@ -23,6 +23,10 @@
 
     const scoreBarClass = m.status === 'risk' ? 'risk' : (m.status === 'ok' ? 'ok' : '');
 
+    const badgesHtml = (m.badges || []).map(b =>
+      `<span class="badge ${b.type}">${b.text}</span>`
+    ).join('');
+
     return `
       <div class="header">
         <div class="header-left">
@@ -42,6 +46,7 @@
             <div class="peer-stat"><div class="k">vs. 3 años</div><div class="v ${m.peers.yrClass}">${m.peers.yr}</div></div>
             <div class="peer-stat"><div class="k">Ranking peers</div><div class="v">${m.peers.rank}</div></div>
           </div>
+          ${badgesHtml ? `<div class="badges-row">${badgesHtml}</div>` : ''}
         </div>
       </div>
     `;
@@ -301,6 +306,75 @@
     `;
   }
 
+  // -------- Section: Tagline (NEW, static hero) --------
+  function renderTagline() {
+    return `
+      <div class="tagline">
+        <div class="tagline-eyebrow">Urban Intelligence · BBVA × Bold</div>
+        <div class="tagline-h">De datos urbanos a <em>decisiones financieras</em> en segundos.</div>
+      </div>
+    `;
+  }
+
+  // -------- Section: Financial Layer (NEW) --------
+  function renderFinancial(m) {
+    if (!m.financial) return '';
+    const f = m.financial;
+    return `
+      <div class="financial-section">
+        <div class="financial-head">
+          <h2>Financial Layer · Traducción a decisión bancaria</h2>
+          <div class="aux">Estimación BoldOS · Output para mesa de crédito institucional</div>
+        </div>
+        <div class="financial-grid">
+          <div class="financial-card">
+            <div class="financial-card-label">Riesgo crediticio</div>
+            <div class="financial-card-value ${f.credit_risk_class}">${f.credit_risk}</div>
+            <div class="financial-card-note">${f.credit_risk_note}</div>
+          </div>
+          <div class="financial-card">
+            <div class="financial-card-label">Elegibilidad ESG</div>
+            <div class="financial-card-value ${f.esg_class}">${f.esg_eligibility} <span class="financial-card-check ${f.esg_class}">${f.esg_class === 'ok' ? '✓' : (f.esg_class === 'risk' ? '✕' : '!')}</span></div>
+            <div class="financial-card-note">${f.esg_note}</div>
+          </div>
+          <div class="financial-card">
+            <div class="financial-card-label">Potencial financiación verde</div>
+            <div class="financial-card-value ${f.green_class}">${f.green_finance}</div>
+            <div class="financial-card-note">${f.green_note}</div>
+          </div>
+          <div class="financial-card">
+            <div class="financial-card-label">Ajuste de tasa sugerido</div>
+            <div class="financial-card-value ${f.rate_class}">${f.rate_adjustment}</div>
+            <div class="financial-card-note">${f.rate_note}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // -------- Section: Decision (NEW) --------
+  function renderDecision(m) {
+    if (!m.decision) return '';
+    const d = m.decision;
+    return `
+      <div class="decision-section">
+        <div class="decision">
+          <div class="decision-label">Decisión recomendada</div>
+          <div class="decision-headline">${d.headline}</div>
+          <div class="decision-rationale">${d.rationale}</div>
+          <div class="decision-matrix">
+            <div class="decision-cell"><div class="decision-cell-k">Target</div><div class="decision-cell-v">${d.target}</div></div>
+            <div class="decision-cell"><div class="decision-cell-k">Producto sugerido</div><div class="decision-cell-v">${d.product}</div></div>
+            <div class="decision-cell"><div class="decision-cell-k">Ticket estimado</div><div class="decision-cell-v">${d.ticket}</div></div>
+            <div class="decision-cell"><div class="decision-cell-k">Horizonte</div><div class="decision-cell-v">${d.horizon}</div></div>
+            <div class="decision-cell"><div class="decision-cell-k">Impacto esperado</div><div class="decision-cell-v">${d.impact}</div></div>
+          </div>
+          <div class="decision-disclaimer">Estimación orientativa basada en BoldOS (Daredevil + Thot) y fuentes abiertas integradas. Validación final sujeta a comité de crédito y due diligence estándar BBVA. Monitorización semestral automatizada.</div>
+        </div>
+      </div>
+    `;
+  }
+
   // -------- Main render --------
   window.renderSnapshot = function(id) {
     const m = window.DATA[id];
@@ -308,15 +382,18 @@
 
     const content = document.getElementById('content');
     content.innerHTML = [
+      renderTagline(),
       renderExecutive(m),
       renderHeader(m),
       renderDrivers(m),
+      renderFinancial(m),
       renderPillars(m),
       renderKPIs(m),
       renderBench(m, id),
       renderInsights(m),
       renderAlerts(m),
       renderRecs(m),
+      renderDecision(m),
       renderRetos(m)
     ].join('');
 

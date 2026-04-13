@@ -10,6 +10,25 @@ window.DATA = {
     score: 64, status: 'warn', statusText: 'En observación',
     tesis: 'Un modelo de expansión urbana de baja densidad avanza sin acompañamiento de transición energética ni provisión de servicios en las nuevas áreas, amplificando la desigualdad entre el centro consolidado y la periferia.',
     ejecutivo: 'Desempeño equilibrado con fortalezas en movilidad (+8 vs peers) y medio ambiente (+4). Los retrasos críticos están en transición energética (-6) y servicios públicos (-4), con una tendencia agregada negativa de -2 puntos en los últimos 3 años. La pérdida se concentra en tres barrios periféricos con déficit compuesto.',
+    badges: [
+      { type: 'esg', text: 'ESG Eligible' },
+      { type: 'opportunity', text: 'Investment Opportunity' }
+    ],
+    financial: {
+      credit_risk: 'Medio', credit_risk_class: 'warn', credit_risk_note: '→ estable',
+      esg_eligibility: 'Alta', esg_class: 'ok', esg_note: 'Taxonomía UE compatible',
+      green_finance: 'Alto', green_class: 'ok', green_note: '3 líneas activables',
+      rate_adjustment: '-0,3% a -0,8%', rate_class: 'good', rate_note: 'sobre línea estándar'
+    },
+    decision: {
+      headline: 'Financiar plan de regeneración integral en 3 barrios con déficit compuesto',
+      rationale: 'La mayor palanca de impacto medible combina vivienda, servicios y medio ambiente en un perímetro acotado. Alineable con taxonomía UE (Urban rehabilitation + Social infrastructure) y monitorizable semestralmente vía BoldOS.',
+      target: 'Pajarillos · Las Viudas · Girón',
+      product: 'Crédito Verde Urbano + Social Impact Bond',
+      ticket: '€25M – €45M',
+      horizon: '24–36 meses',
+      impact: 'Cierra brecha simultánea en 3 pilares. Reducción estimada de mora ESG-linked: -0,6 pp. Elegible para garantía FEI.'
+    },
     peers: { vs: '+3 pts', vsClass: 'up', ccaa: '+5 pts', ccaaClass: 'up', yr: '-2 pts', yrClass: 'down', rank: '3 / 8' },
     pillars: [
       { name: 'Medio ambiente', score: 71, status: 'ok', statusText: 'Aceptable', delta: '↑ +2', vsPeers: '+4', icon: 'leaf' },
@@ -63,6 +82,25 @@ window.DATA = {
     score: 76, status: 'ok', statusText: 'Bueno',
     tesis: 'El reto ya no es mejorar sino sostener el liderazgo: los peers están cerrando brecha y el modelo requiere renovación continua para no ser alcanzado.',
     ejecutivo: 'Líder absoluto del peer group (+15 pts sobre media) en 4 de los 5 pilares. El Anillo Verde y un despliegue solar del 18% sostienen una ventaja estructural. Único pilar rezagado: servicios públicos con saturación sanitaria focalizada en el norte. Tendencia histórica de mejora sostenida: +6 pts en 5 ciclos.',
+    badges: [
+      { type: 'premium', text: 'Premium ESG' },
+      { type: 'esg', text: 'ESG Eligible' }
+    ],
+    financial: {
+      credit_risk: 'Bajo', credit_risk_class: 'ok', credit_risk_note: '↓ mejorando',
+      esg_eligibility: 'Máxima', esg_class: 'ok', esg_note: 'Premium ESG Tier',
+      green_finance: 'Medio', green_class: 'warn', green_note: 'alta ejecución previa',
+      rate_adjustment: '-0,8% a -1,5%', rate_class: 'good', rate_note: 'premium bonus'
+    },
+    decision: {
+      headline: 'Estructurar bono climático municipal con Vitoria como emisor referente',
+      rationale: 'Perfil ESG Premium y liderazgo europeo hacen de Vitoria el emisor ideal para lanzar la primera línea de bonos climáticos municipales de BBVA España. Señal al mercado sobre el compromiso de la banca con la taxonomía UE 2030.',
+      target: 'Emisión municipal consolidada',
+      product: 'BBVA Green Bond Structuring · Sustainability-Linked',
+      ticket: '€80M – €150M',
+      horizon: '12 meses',
+      impact: 'Posiciona a BBVA como líder de green bonds municipales en España. Replicable con Bilbao y Pamplona como siguientes emisores.'
+    },
     peers: { vs: '+15 pts', vsClass: 'up', ccaa: '+9 pts', ccaaClass: 'up', yr: '+2 pts', yrClass: 'up', rank: '1 / 8' },
     pillars: [
       { name: 'Medio ambiente', score: 84, status: 'ok', statusText: 'Excelente', delta: '↑ +3', vsPeers: '+17', icon: 'leaf' },
@@ -114,6 +152,25 @@ window.DATA = {
     score: 70, status: 'ok', statusText: 'Bueno',
     tesis: 'La fortaleza del ejido esconde un problema metropolitano: la expansión, la movilidad pendular y la vivienda ocurren en un perímetro tres veces mayor al analizado.',
     ejecutivo: 'Desempeño consistentemente bueno (+9 vs peers) con equidad territorial ejemplar y la mejor distribución de verde urbano del grupo. Compacidad genera eficiencia de servicios (85% a 15 min) pero limita potencial solar. El crecimiento real ocurre fuera del ejido: Burlada, Barañáin y Villava absorben la expansión funcional que el municipio evita.',
+    badges: [
+      { type: 'esg', text: 'ESG Eligible' },
+      { type: 'opportunity', text: 'Investment Opportunity' }
+    ],
+    financial: {
+      credit_risk: 'Bajo', credit_risk_class: 'ok', credit_risk_note: '→ estable',
+      esg_eligibility: 'Alta', esg_class: 'ok', esg_note: 'Taxonomía UE compatible',
+      green_finance: 'Alto', green_class: 'ok', green_note: 'solar + metropolitano',
+      rate_adjustment: '-0,6% a -1,2%', rate_class: 'good', rate_note: 'sobre línea estándar'
+    },
+    decision: {
+      headline: 'Financiar salto solar municipal (6% → 20%) + extensión metropolitana',
+      rationale: 'Compacidad limita el techo pero mantiene ratios de ejecución predecibles. Extensión al perímetro metropolitano (Burlada, Barañáin, Villava) multiplica el universo elegible para crédito verde sin diluir la calidad del avalista principal.',
+      target: 'Pamplona + Comarca metropolitana',
+      product: 'Crédito Verde Plurianual · Estructura multi-garante',
+      ticket: '€35M – €60M',
+      horizon: '18–36 meses',
+      impact: 'Cierra brecha energética vs peers en 3 años. Pipeline replicable a Donostialdea y Gasteizko Eskualdea.'
+    },
     peers: { vs: '+9 pts', vsClass: 'up', ccaa: '+4 pts', ccaaClass: 'up', yr: '+1 pt', yrClass: 'up', rank: '2 / 8' },
     pillars: [
       { name: 'Medio ambiente', score: 74, status: 'ok', statusText: 'Bueno', delta: '↑ +2', vsPeers: '+7', icon: 'leaf' },
@@ -165,6 +222,25 @@ window.DATA = {
     score: 62, status: 'warn', statusText: 'En observación',
     tesis: 'La turistización del núcleo histórico desplaza residentes y bloquea inversión energética, convirtiendo el patrimonio UNESCO en un activo económico vaciado de función urbana.',
     ejecutivo: 'Municipio tensionado por su doble condición de patrimonio UNESCO y destino turístico. Buena accesibilidad a servicios por compacidad histórica, pero con retraso energético por restricción patrimonial (-9 vs peers), vaciado residencial acelerado (16,4% vacancia) y vulnerabilidad térmica estival crítica (+6,2°C en casco antiguo). Tendencia 5 años: -2 pts.',
+    badges: [
+      { type: 'monitor', text: 'Monitor Closely' },
+      { type: 'heritage', text: 'Heritage-Linked' }
+    ],
+    financial: {
+      credit_risk: 'Medio-Alto', credit_risk_class: 'warn', credit_risk_note: '↑ presión creciente',
+      esg_eligibility: 'Media', esg_class: 'warn', esg_note: 'Social bajo presión turística',
+      green_finance: 'Medio', green_class: 'warn', green_note: 'patrimonio restringe',
+      rate_adjustment: '±0% (condicionado)', rate_class: 'warn', rate_note: 'requiere plan previo'
+    },
+    decision: {
+      headline: 'Condicionar financiación turística a plan VUT + refugio climático',
+      rationale: 'Sin regulación de vivienda turística, la exposición crediticia hipotecaria se deteriora en 3–5 años. BBVA debe estructurar cualquier línea nueva bajo condicionalidad ESG: financiar solo proyectos que refuercen el factor residencial y la habitabilidad estival.',
+      target: 'Casco Histórico · Conjunto UNESCO',
+      product: 'Línea de Crédito Condicionada ESG · Performance-Linked',
+      ticket: '€15M – €30M',
+      horizon: '24 meses',
+      impact: 'Protege la cartera hipotecaria del casco (€180M estimados). Primer modelo condicionalidad urbana-ESG replicable a Toledo, Ávila, Cáceres.'
+    },
     peers: { vs: '-2 pts', vsClass: 'down', ccaa: '+3 pts', ccaaClass: 'up', yr: '-1 pt', yrClass: 'down', rank: '5 / 8' },
     pillars: [
       { name: 'Medio ambiente', score: 68, status: 'ok', statusText: 'Aceptable', delta: '↓ -1', vsPeers: '+1', icon: 'leaf' },
@@ -217,6 +293,25 @@ window.DATA = {
     score: 63, status: 'warn', statusText: 'En observación',
     tesis: 'El municipio posee activos climáticos pasivos que no está capitalizando activamente: viento atlántico, nubosidad y ría son ventajas competitivas aún no monetizadas.',
     ejecutivo: 'Clima atlántico y geografía costera generan ventajas ambientales pasivas (mejor calidad del aire del grupo, menor isla de calor) sin intervención activa. Retraso energético acumulado (-10 vs peers) y topografía que produce desigualdad de acceso entre barrios altos y bajos. Estacionalidad extrema: +42% ocupación residencial en agosto vs enero.',
+    badges: [
+      { type: 'opportunity', text: 'Investment Opportunity' },
+      { type: 'esg', text: 'ESG Eligible' }
+    ],
+    financial: {
+      credit_risk: 'Medio', credit_risk_class: 'warn', credit_risk_note: '→ estable',
+      esg_eligibility: 'Media-Alta', esg_class: 'warn', esg_note: 'activos climáticos infrautilizados',
+      green_finance: 'Alto', green_class: 'ok', green_note: 'eólica urbana diferencial',
+      rate_adjustment: '-0,3% a -0,9%', rate_class: 'good', rate_note: 'sobre línea estándar'
+    },
+    decision: {
+      headline: 'Financiar piloto de eólica urbana como vector energético único',
+      rationale: 'Santander puede convertirse en el único caso de eólica urbana institucional de España. Diferencial competitivo monetizable como Innovation Green Bond, con precedente estratégico para otras ciudades portuarias.',
+      target: 'Fachada portuaria · Edificios altos municipales',
+      product: 'Innovation Green Bond · Co-inversión BEI',
+      ticket: '€20M – €40M',
+      horizon: '18–30 meses',
+      impact: 'Pioneering transaction en vector renovable urbano no-solar. Publicable en Green Bond Principles ICMA. Replicable a A Coruña, Vigo, Cádiz.'
+    },
     peers: { vs: '-1 pt', vsClass: 'down', ccaa: '+2 pts', ccaaClass: 'up', yr: '+1 pt', yrClass: 'up', rank: '4 / 8' },
     pillars: [
       { name: 'Medio ambiente', score: 69, status: 'ok', statusText: 'Aceptable', delta: '↑ +1', vsPeers: '+2', icon: 'leaf' },
@@ -269,6 +364,25 @@ window.DATA = {
     score: 59, status: 'risk', statusText: 'En riesgo',
     tesis: 'El municipio opera como dos ciudades en tensión: un centro histórico que se vacía y una periferia industrial que se expande, agotando suelo rural sin resolver la despoblación central.',
     ejecutivo: 'Único municipio del peer group con deterioro sostenido: -4 pts en 4 ciclos consecutivos. Expansión industrial extensiva (+128 ha/año) coexiste con vaciado del centro histórico (+1,4 pp/año de vacancia). Brecha energética crítica (-12 vs peers). Sin intervención estructural, la distancia con peers seguirá ampliándose.',
+    badges: [
+      { type: 'risk', text: 'High Risk' },
+      { type: 'recovery', text: 'Recovery Finance' }
+    ],
+    financial: {
+      credit_risk: 'Alto', credit_risk_class: 'risk', credit_risk_note: '↑ deteriorando',
+      esg_eligibility: 'Baja', esg_class: 'risk', esg_note: 'tendencia negativa sostenida',
+      green_finance: 'Medio', green_class: 'warn', green_note: 'solar industrial pendiente',
+      rate_adjustment: '+0,3% a +0,8%', rate_class: 'bad', rate_note: 'prima de riesgo aplicada'
+    },
+    decision: {
+      headline: 'Plan de recuperación urbana condicionado antes que la exposición se deteriore',
+      rationale: 'Burgos cruza en el próximo ciclo la frontera de 55 pts — umbral de no-elegibilidad ESG. Window corto para estructurar financiación de rescate con garantía FEI y condicionalidad de plan de regeneración del centro histórico.',
+      target: 'Casco Histórico + Polígonos Villafría/Villalonquéjar',
+      product: 'Crédito Estructurado de Recuperación + Garantía FEI',
+      ticket: '€40M – €70M',
+      horizon: '36 meses · revisión semestral',
+      impact: 'Contiene deterioro de cartera local BBVA (€220M exposición estimada). Modelo replicable a municipios con tendencia negativa (León, Soria, Zamora).'
+    },
     peers: { vs: '-5 pts', vsClass: 'down', ccaa: '0 pts', ccaaClass: 'flat', yr: '-3 pts', yrClass: 'down', rank: '6 / 8' },
     pillars: [
       { name: 'Medio ambiente', score: 64, status: 'ok', statusText: 'Aceptable', delta: '↓ -2', vsPeers: '-3', icon: 'leaf' },
@@ -322,6 +436,25 @@ window.DATA = {
     score: 67, status: 'warn', statusText: 'Aceptable',
     tesis: 'La isla de calor crece +2,1°C/década y genera impacto sanitario documentado, mientras la expansión costera continúa sin freno — la adaptación climática es el vector dominante.',
     ejecutivo: 'Vanguardia tecnológica y energética (+10 vs peers en Energía) conviviendo con vulnerabilidad climática extrema: +7,1°C de isla de calor, la máxima del estudio ampliado. Liderazgo solar en ejecución (14%) y mejor movilidad del grupo, pero terciarización residencial acelerada del centro y expansión costera sostenida sobre suelo protegido.',
+    badges: [
+      { type: 'opportunity', text: 'Investment Opportunity' },
+      { type: 'climate', text: 'Climate-Linked' }
+    ],
+    financial: {
+      credit_risk: 'Medio', credit_risk_class: 'warn', credit_risk_note: '↑ componente climático',
+      esg_eligibility: 'Alta', esg_class: 'ok', esg_note: 'liderazgo energético compensa',
+      green_finance: 'Muy alto', green_class: 'ok', green_note: 'solar + adaptación escalables',
+      rate_adjustment: '-0,5% a -1,0%', rate_class: 'good', rate_note: 'climate bonus aplicable'
+    },
+    decision: {
+      headline: 'Co-financiar plan de adaptación climática + escalada solar',
+      rationale: 'La vulnerabilidad térmica genera riesgo físico creciente sobre la cartera hipotecaria y empresarial (valoraciones inmobiliarias sensibles a habitabilidad estival). Anticipar con financiación mixta mitigation + adaptation protege el libro y abre mercado.',
+      target: 'Centro histórico + Periferia norte · TechPark',
+      product: 'Blended Finance Climático · BBVA + BEI + AEB',
+      ticket: '€90M – €180M',
+      horizon: '36–60 meses',
+      impact: 'Cubre riesgo físico sobre €1,2B de exposición hipotecaria. Primera operación Blended Finance climática urbana de BBVA en España.'
+    },
     peers: { vs: '+2 pts', vsClass: 'up', ccaa: '+6 pts', ccaaClass: 'up', yr: '+3 pts', yrClass: 'up', rank: 'Fuera de grupo peer' },
     pillars: [
       { name: 'Medio ambiente', score: 63, status: 'ok', statusText: 'Aceptable', delta: '→ 0', vsPeers: '-4', icon: 'leaf' },
@@ -374,6 +507,26 @@ window.DATA = {
     score: 74, status: 'ok', statusText: 'Bueno',
     tesis: 'El reto ya no es crecer sino distribuir valor: Bilbao concentra demanda mientras el área metropolitana requiere la misma regeneración que se logró en el núcleo hace 20 años.',
     ejecutivo: 'Referente internacional de reconversión post-industrial. Modelo de crecimiento hacia dentro consolidado (+0,1% expansión), liderazgo absoluto en movilidad (81) y fortalezas distribuidas en los 5 pilares. Tensión residencial por alto atractivo urbano con vacancia en 8,4%, muy por debajo de la media nacional. Deuda ambiental industrial aún por remediar en Zorrozaurre.',
+    badges: [
+      { type: 'premium', text: 'Premium ESG' },
+      { type: 'esg', text: 'ESG Eligible' },
+      { type: 'opportunity', text: 'Investment Opportunity' }
+    ],
+    financial: {
+      credit_risk: 'Bajo', credit_risk_class: 'ok', credit_risk_note: '↓ mejorando',
+      esg_eligibility: 'Máxima', esg_class: 'ok', esg_note: 'Premium ESG Tier',
+      green_finance: 'Alto', green_class: 'ok', green_note: 'geotermia + metropolitano',
+      rate_adjustment: '-0,7% a -1,4%', rate_class: 'good', rate_note: 'premium bonus'
+    },
+    decision: {
+      headline: 'Co-estructurar vivienda asequible metropolitana + piloto geotermia urbana',
+      rationale: 'Bilbao es el único caso del estudio con perfil crediticio Bajo + potencial verde Alto + vector energético único (geotermia urbana). Combinación óptima para anclar una operación de referencia para toda la red BBVA en Europa.',
+      target: 'Barakaldo + Sestao (vivienda) · Zorrozaurre (geotermia)',
+      product: 'Bono Vivienda Asequible + Innovation Green · Co-arranger BBVA',
+      ticket: '€120M – €200M',
+      horizon: '24–48 meses',
+      impact: 'Transaction de referencia Europa. Abre pipeline de vivienda metropolitana en Euskadi (€500M+ estimados a 5 años).'
+    },
     peers: { vs: '+13 pts', vsClass: 'up', ccaa: '+7 pts', ccaaClass: 'up', yr: '+2 pts', yrClass: 'up', rank: 'Fuera de grupo peer' },
     pillars: [
       { name: 'Medio ambiente', score: 76, status: 'ok', statusText: 'Bueno', delta: '↑ +3', vsPeers: '+9', icon: 'leaf' },

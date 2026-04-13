@@ -1,127 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>UrbanSnapshot Sustentabilidad · BBVA + BoldOS</title>
-<link rel="icon" href="logo-bbva.svg">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Territory Snapshot · Sostenibilidad — BBVA</title>
+<meta name="description" content="Diagnóstico integral de sostenibilidad territorial para ayuntamientos. Inteligencia territorial BBVA + Bold.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="page">
 
-<header class="topbar">
-  <div class="brand">
-    <div class="bbva-logo">
-      <img src="logo-bbva.svg" alt="BBVA" height="28">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="logo">
+      <svg viewBox="0 0 600 179.8" xmlns="http://www.w3.org/2000/svg">
+        <g fill="#004481">
+          <path d="M432.2,24.4l-51.6,98.2c-1.1,2.1-4.3,2.1-5.4,0l-51.6-98.2c-0.5-1-1.5-1.6-2.6-1.6h-25c-1.7,0-2.8,1.8-2,3.3 l81.3,152.2c1.1,2.1,4.1,2.1,5.3,0l81.3-152.2c0.8-1.5-0.3-3.3-2-3.3h-25C433.7,22.8,432.7,23.4,432.2,24.4L432.2,24.4z"/>
+          <path d="M461.5,155.5l51.6-98.2c1.1-2.1,4.3-2.1,5.4,0l51.6,98.2c0.5,1,1.5,1.6,2.6,1.6h25c1.7,0,2.8-1.8,2-3.3 L518.4,1.6c-1.1-2.1-4.1-2.1-5.3,0l-81.3,152.2c-0.8,1.5,0.3,3.3,2,3.3h25C459.9,157,461,156.4,461.5,155.5L461.5,155.5z"/>
+          <path d="M108.8,95.2c10.8-5.4,17.5-17.1,17.5-31.4c0-24.5-19.1-41.1-46-41.1H3c-1.7,0-3,1.3-3,3v151.1c0,1.7,1.3,3,3,3 h74c37,0,56.5-15.9,56.5-47.1C133.5,102.3,108.8,95.2,108.8,95.2L108.8,95.2z M29,45.5h45.9c16.9,0,25.5,7.2,25.5,20.6 c0,13.4-8.6,20.6-25.5,20.6H29c-1.6,0-3-1.3-3-3V48.5C26,46.8,27.3,45.5,29,45.5L29,45.5z M75.5,157l-46.5,0c-1.7,0-3-1.3-3-3 l0-41.7c0-1.6,1.3-3,3-3h46.5c22.2,0,32.1,6.3,32.1,23.8C107.5,150.8,97.9,157,75.5,157L75.5,157z"/>
+          <path d="M267.5,95.2c10.8-5.4,17.5-17.1,17.5-31.4c0-24.5-19.1-41.1-46-41.1h-77.4c-1.7,0-3,1.3-3,3v151.1 c0,1.7,1.3,3,3,3h74c37,0,56.5-15.9,56.5-47.1C292.2,102.3,267.5,95.2,267.5,95.2L267.5,95.2z M187.7,45.5h45.9 c16.9,0,25.5,7.2,25.5,20.6c0,13.4-8.6,20.6-25.5,20.6h-45.9c-1.7,0-3-1.3-3-3V48.5C184.7,46.8,186,45.5,187.7,45.5L187.7,45.5z M234.1,157l-46.5,0c-1.6,0-3-1.3-3-3v-41.7c0-1.6,1.3-3,3-3h46.5c22.2,0,32.1,6.3,32.1,23.8C266.2,150.8,256.5,157,234.1,157 L234.1,157z"/>
+        </g>
+      </svg>
     </div>
-    <div class="brand-divider"></div>
-    <div>
-      <div class="brand-title">UrbanSnapshot Sustentabilidad</div>
-      <div class="brand-sub">Inteligencia multitemporal para Instituciones y Real Estate</div>
+    <div class="meta">
+      <div><strong>Territory Snapshot</strong> · Sostenibilidad Institucional</div>
+      <div>Informe proactivo · Ciclo 2025–Q1 2026</div>
     </div>
   </div>
-  <div class="powered">Powered by <strong>BoldOS</strong> · Daredevil + Thot</div>
-</header>
 
-<div class="mode-switcher">
-  <label>Caso de uso</label>
-  <div class="mode-tabs">
-    <button class="mode-tab active" data-modo="instituciones">🏛️ Instituciones</button>
-    <button class="mode-tab" data-modo="real_estate">🏢 Real Estate</button>
+  <!-- SELECTOR -->
+  <div class="selector-bar" id="selector">
+    <div class="selector-label">Ayuntamiento</div>
+    <div class="selector-wrap">
+      <input type="text" class="selector-input" id="selectorInput" readonly placeholder="Buscar ayuntamiento...">
+      <svg class="selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="selector-dropdown" id="selectorDropdown"></div>
+    </div>
+    <div class="selector-aux">8 ayuntamientos · Capitales CCAA tamaño medio</div>
   </div>
-  <select class="selector-entidad" id="selector-entidad"></select>
-  <div class="contexto-entidad" id="contexto-entidad"></div>
+
+  <!-- CONTENT (dynamic) -->
+  <div id="content"></div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>Territory Snapshot · Sostenibilidad — Inteligencia territorial para instituciones financieras y sus clientes institucionales</div>
+    <div>Próxima actualización automática: julio 2026 · Ciclo 2026-Q2</div>
+  </div>
+
 </div>
 
-<main>
-  <section class="score-card" id="score-card"></section>
-
-  <div class="right-col">
-
-    <div class="panel">
-      <h3>KPIs ambientales <span class="tag">sensorización multitemporal</span></h3>
-      <div class="kpi-grid" id="kpi-grid"></div>
-    </div>
-
-    <div class="panel">
-      <h3>Histórico multitemporal 2015–2025 + forecast 2030 <span class="tag">Daredevil + Thot</span></h3>
-      <div class="chart-controls" id="chart-controls"></div>
-      <div id="chart-area"></div>
-      <div class="chart-legend">
-        <span><span class="leg-dot hist"></span>Serie histórica sensorizada</span>
-        <span><span class="leg-dot fc"></span>Forecast 2026–2030 (±10% IC)</span>
-        <span><span class="leg-dot opt"></span>Umbral óptimo</span>
-        <span><span class="leg-dot crit"></span>Umbral crítico</span>
-      </div>
-    </div>
-
-    <div class="panel" id="panel-hotspots">
-      <h3 id="hotspot-title">Hotspots intra-municipio <span class="tag">Thot</span></h3>
-      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;" id="hotspot-subtitle"></p>
-      <div class="hotspots-grid">
-        <div>
-          <h4 class="hs-group-title best">✓ Mejores distritos</h4>
-          <div id="hotspot-mejores"></div>
-        </div>
-        <div>
-          <h4 class="hs-group-title worst">⚠ Distritos con brecha</h4>
-          <div id="hotspot-peores"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel" id="panel-peers">
-      <h3>Peer benchmarking · clúster Madrid <span class="tag">Thot</span></h3>
-      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
-        Score compuesto comparado con capitales españolas de perfil similar, calculado con los mismos parámetros de normalización.
-      </p>
-      <div class="peer-list" id="peer-list"></div>
-    </div>
-
-    <div class="panel">
-      <h3>Retos descubiertos <span class="tag">Thot</span></h3>
-      <div class="finding-list" id="finding-list"></div>
-      <div class="strengths">
-        <h6>Fortalezas identificadas</h6>
-        <ul id="strengths-list"></ul>
-      </div>
-    </div>
-
-    <div class="panel">
-      <h3>Recomendaciones <span class="tag">Thot</span></h3>
-      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
-        Acciones priorizadas generadas sobre las brechas detectadas vs. óptimo normativo y clúster de referencia.
-      </p>
-      <div class="reco-list" id="reco-list"></div>
-    </div>
-
-    <div class="panel" id="panel-best">
-      <h3>Mejores prácticas del clúster <span class="tag">peer learning</span></h3>
-      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
-        Municipios del clúster que superan a Madrid en al menos un KPI, con la práctica asociada inferida por BoldOS.
-      </p>
-      <div class="best-list" id="best-list"></div>
-    </div>
-
-    <div class="panel" id="panel-inversion">
-      <h3>Plan de inversión para mejora de score <span class="tag">BBVA + BoldOS</span></h3>
-      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
-        Dos escenarios escalonados de intervención con partidas técnicas, plazos y puntos de score esperados. Financiables vía productos verdes BBVA con verificación KPI multitemporal.
-      </p>
-      <div id="inversion-content"></div>
-    </div>
-
-  </div>
-</main>
-
-<footer>
-  <strong>UrbanSnapshot Sustentabilidad</strong> · Prototipo desarrollado por Bold para BBVA — demo con datos ilustrativos<br>
-  Capa Daredevil: sensorización multitemporal de fenómenos ambientales · Capa Thot: scoring, benchmarking, recomendaciones
-</footer>
-
 <script src="data.js"></script>
-<script src="scoring.js"></script>
-<script src="charts.js"></script>
+<script src="render.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

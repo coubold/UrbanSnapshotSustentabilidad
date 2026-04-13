@@ -41,10 +41,14 @@ header.topbar {
 .brand {
   display: flex; align-items: center; gap: 14px;
 }
-.chevron {
-  width: 28px; height: 28px;
-  background: var(--bbva-blue-light);
-  clip-path: polygon(0 0, 60% 0, 100% 50%, 60% 100%, 0 100%, 40% 50%);
+.bbva-logo {
+  display: flex; align-items: center;
+  background: white; padding: 8px 14px; border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+.bbva-logo img { display: block; }
+.brand-divider {
+  width: 1px; height: 32px; background: rgba(255,255,255,0.2);
 }
 .brand-title { font-size: 18px; font-weight: 700; letter-spacing: -0.2px; }
 .brand-sub   { font-size: 12px; opacity: 0.75; font-weight: 400; }
@@ -236,4 +240,80 @@ footer strong { color: var(--bbva-navy); }
   .score-card { position: static; }
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
   .reco-list, .best-list { grid-template-columns: 1fr; }
+}
+
+/* Chart legend */
+.chart-legend {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  font-size: 11px; color: var(--bbva-text-soft);
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--bbva-border);
+}
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.leg-dot { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+.leg-dot.hist { background: var(--bbva-blue); }
+.leg-dot.fc { background: #9C27B0; border: 1px dashed #9C27B0; height: 0; border-top: 2px dashed #9C27B0; }
+.leg-dot.opt { background: var(--ok); }
+.leg-dot.crit { background: var(--bad); }
+
+/* Hotspots */
+.hotspots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.hs-group-title {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 10px; font-weight: 700;
+}
+.hs-group-title.best { color: var(--ok); }
+.hs-group-title.worst { color: var(--bad); }
+.hotspot-row {
+  display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 6px; margin-bottom: 6px;
+  font-size: 13px;
+}
+.hotspot-row.best { background: #E8F5E9; border-left: 3px solid var(--ok); }
+.hotspot-row.worst { background: #FFEBEE; border-left: 3px solid var(--bad); }
+.hs-rank { font-weight: 800; color: var(--bbva-text-soft); font-size: 12px; }
+.hs-name { color: var(--bbva-text); font-weight: 600; }
+.hs-val { font-weight: 700; color: var(--bbva-navy); }
+.hs-unit { font-size: 10px; color: var(--bbva-text-soft); font-weight: 400; }
+
+/* Plan de inversión */
+.escenario {
+  background: linear-gradient(135deg, #F4F9FD 0%, #E7F1FA 100%);
+  border: 1px solid var(--bbva-border); border-left: 4px solid var(--bbva-blue);
+  padding: 18px 20px; border-radius: 8px; margin-bottom: 12px;
+}
+.escenario.premium {
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+  border-left-color: var(--bbva-gold);
+}
+.esc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.esc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--bbva-text-soft); font-weight: 700; }
+.esc-score { font-size: 15px; font-weight: 700; color: var(--bbva-navy); margin-top: 4px; }
+.esc-monto { text-align: right; }
+.esc-monto > div:first-child { font-size: 22px; font-weight: 800; color: var(--bbva-navy); }
+.esc-plazo { font-size: 11px; color: var(--bbva-text-soft); margin-top: 2px; }
+.escenario.premium .esc-monto > div:first-child { color: #B8860B; }
+.esc-partidas { list-style: none; font-size: 12px; }
+.esc-partidas li {
+  padding: 5px 0 5px 18px; position: relative;
+  color: var(--bbva-text); border-bottom: 1px solid rgba(7,33,70,0.06);
+}
+.esc-partidas li:last-child { border-bottom: none; }
+.esc-partidas li:before {
+  content: "→"; position: absolute; left: 0; color: var(--bbva-blue); font-weight: 700;
+}
+.escenario.premium .esc-partidas li:before { color: var(--bbva-gold); }
+
+.inversion-total {
+  background: var(--bbva-navy); color: white; padding: 16px 20px; border-radius: 8px;
+  display: flex; justify-content: space-between; align-items: center; margin-top: 12px;
+}
+.inv-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+.inv-nota { font-size: 11px; opacity: 0.7; margin-top: 4px; max-width: 420px; }
+.inv-monto {
+  font-size: 28px; font-weight: 800; color: var(--bbva-blue-light); letter-spacing: -0.5px;
+}
+
+@media (max-width: 900px) {
+  .hotspots-grid { grid-template-columns: 1fr; }
+  .esc-header, .inversion-total { flex-direction: column; align-items: flex-start; gap: 8px; }
 }

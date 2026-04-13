@@ -4,14 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UrbanSnapshot Sustentabilidad · BBVA + BoldOS</title>
-<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='0,0 19,0 32,16 19,32 0,32 13,16' fill='%231464A5'/></svg>">
+<link rel="icon" href="logo-bbva.svg">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header class="topbar">
   <div class="brand">
-    <div class="chevron"></div>
+    <div class="bbva-logo">
+      <img src="logo-bbva.svg" alt="BBVA" height="28">
+    </div>
+    <div class="brand-divider"></div>
     <div>
       <div class="brand-title">UrbanSnapshot Sustentabilidad</div>
       <div class="brand-sub">Inteligencia multitemporal para Instituciones y Real Estate</div>
@@ -41,9 +44,30 @@
     </div>
 
     <div class="panel">
-      <h3>Histórico multitemporal 2015–2025 <span class="tag">Daredevil</span></h3>
+      <h3>Histórico multitemporal 2015–2025 + forecast 2030 <span class="tag">Daredevil + Thot</span></h3>
       <div class="chart-controls" id="chart-controls"></div>
       <div id="chart-area"></div>
+      <div class="chart-legend">
+        <span><span class="leg-dot hist"></span>Serie histórica sensorizada</span>
+        <span><span class="leg-dot fc"></span>Forecast 2026–2030 (±10% IC)</span>
+        <span><span class="leg-dot opt"></span>Umbral óptimo</span>
+        <span><span class="leg-dot crit"></span>Umbral crítico</span>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-hotspots">
+      <h3 id="hotspot-title">Hotspots intra-municipio <span class="tag">Thot</span></h3>
+      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;" id="hotspot-subtitle"></p>
+      <div class="hotspots-grid">
+        <div>
+          <h4 class="hs-group-title best">✓ Mejores distritos</h4>
+          <div id="hotspot-mejores"></div>
+        </div>
+        <div>
+          <h4 class="hs-group-title worst">⚠ Distritos con brecha</h4>
+          <div id="hotspot-peores"></div>
+        </div>
+      </div>
     </div>
 
     <div class="panel" id="panel-peers">
@@ -77,6 +101,14 @@
         Municipios del clúster que superan a Madrid en al menos un KPI, con la práctica asociada inferida por BoldOS.
       </p>
       <div class="best-list" id="best-list"></div>
+    </div>
+
+    <div class="panel" id="panel-inversion">
+      <h3>Plan de inversión para mejora de score <span class="tag">BBVA + BoldOS</span></h3>
+      <p style="font-size:12px;color:var(--bbva-text-soft);margin-bottom:14px;">
+        Dos escenarios escalonados de intervención con partidas técnicas, plazos y puntos de score esperados. Financiables vía productos verdes BBVA con verificación KPI multitemporal.
+      </p>
+      <div id="inversion-content"></div>
     </div>
 
   </div>

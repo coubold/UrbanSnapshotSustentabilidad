@@ -45,7 +45,7 @@ window.DATA = {
       { name: 'Accesibilidad a servicios', value: '61', unit: '%', trend: 'down', trendText: '↓ -4 pp', delta: 'población a 15 min caminando', interp: 'Edu, salud, sociales y reciclaje combinados. Tres barrios por debajo del 40%: Pajarillos, Las Viudas, Girón.' },
       { name: 'Cobertura transporte público', value: '78', unit: '%', trend: 'up-good', trendText: '↑ +2 pp', delta: 'población a 300 m de parada', interp: 'Por encima de peers. Déficit focalizado en desarrollos periurbanos recientes del sur.' },
       { name: 'Expansión urbana', value: '+0,8', unit: '%', trend: 'up-warn', trendText: '↑ +89 ha', delta: 'suelo sellado anual', interp: 'Crecimiento moderado pero mayormente en baja densidad, contrario a tendencia europea de consolidación.' },
-      { name: 'Vivienda vacía detectable', value: '13,8', unit: '%', trend: 'flat', trendText: 'Estable', delta: 'parque residencial · INE + señales', interp: 'Superior a media nacional (10,8%). Concentración en casco histórico y primera periferia.' }
+      { name: 'Vivienda vacía detectable', value: '9,8', unit: '%', trend: 'flat', trendText: 'Estable', delta: 'por debajo de media nacional (INE 2021)', interp: 'Provincia con menos del 10% de vacancia. Concentración en casco histórico y primera periferia.' }
     ],
     history: [ [2021, 66], [2022, 68], [2023, 66], [2024, 65], [2025, 64] ],
     histTrend: '↓ -2 pts', histTrendClass: 'risk',
@@ -53,19 +53,19 @@ window.DATA = {
       { title: 'Déficit compuesto en 3 barrios', text: 'Pajarillos, Las Viudas y Girón presentan simultáneamente <strong>déficit de verde urbano, accesibilidad a servicios &lt; 40% y sobrecalentamiento</strong>. Constituyen el núcleo de mayor desigualdad territorial y deberían concentrar el 60% del esfuerzo de inversión municipal.' },
       { title: 'Energía: brecha vs peers', text: 'Pilar Energía <strong>6 puntos bajo peers</strong>. Vitoria lidera con 18% de ejecución solar; Valladolid solo 2,1% pese a mayor potencial.' },
       { title: 'Verde inequitativamente distribuido', text: 'El promedio supera el umbral OMS pero <strong>el 48% se concentra en dos parques</strong>. Nueve barrios con menos de 4 m²/hab.' },
-      { title: 'Vivienda vacía como oportunidad', text: '13,8% de vacancia — <strong>3 pp sobre media nacional</strong>. Palanca para regenerar sin expansión de suelo.' }
+      { title: 'Vivienda vacía como oportunidad', text: '9,8% de vacancia concentrada en casco histórico — <strong>potencial de regeneración sin expansión de suelo</strong>.' }
     ],
     alerts: [
       { level: 'high', text: 'Tres barrios con déficit compuesto (verde + servicios + transporte)', zone: 'Pajarillos · Las Viudas · Girón' },
       { level: 'high', text: 'NO₂ por encima de directiva UE 2030 en corredores principales', zone: 'Ejes A-62 y VA-20' },
       { level: 'med', text: 'Retraso estructural en transición energética vs peers', zone: 'Todo el ejido' },
       { level: 'med', text: 'Cuatro focos nuevos de isla de calor sin cobertura arbórea', zone: 'Delicias, Rondilla y La Victoria' },
-      { level: 'med', text: 'Vacancia residencial 3 pp sobre media nacional', zone: 'Casco histórico y primera periferia' }
+      { level: 'med', text: 'Vacancia residencial concentrada en casco histórico y primera periferia', zone: 'Casco histórico y primera periferia' }
     ],
     recs: [
       { prio: 'max', prioText: 'Prioridad máxima', title: 'Intervención integral en 3 barrios con déficit compuesto', desc: 'Pajarillos, Las Viudas y Girón: corredor verde + centro social + reciclaje + parada BUS secundaria. Ataca simultáneamente los tres pilares más débiles del municipio con un único proyecto coordinado.', h: '18–36 meses', e: 'Alto', i: 'Muy alto', p: 'MA + Serv + Mov' },
       { prio: 'alta', prioText: 'Prioridad alta', title: 'Plan solar fotovoltaico en edificios públicos', desc: '412 GWh/año de potencial técnico detectado. Fase inicial sobre 40 cubiertas municipales. Autoconsumo directo, payback 6–8 años y cierre de brecha con peers.', h: '12–24 meses', e: 'Medio', i: 'Alto', p: 'Energía' },
-      { prio: 'alta', prioText: 'Prioridad alta', title: 'Programa de regeneración de vivienda vacía', desc: '13,8% vacancia concentrada geográficamente. Movilizar parque existente antes de habilitar suelo nuevo. Compatible con bonificaciones fiscales y línea de crédito verde.', h: '12–24 meses', e: 'Medio', i: 'Alto', p: 'Territorio' },
+      { prio: 'alta', prioText: 'Prioridad alta', title: 'Programa de regeneración de vivienda vacía', desc: '9,8% vacancia concentrada en casco histórico. Movilizar parque existente antes de habilitar suelo nuevo. Compatible con bonificaciones fiscales y línea de crédito verde.', h: '12–24 meses', e: 'Medio', i: 'Alto', p: 'Territorio' },
       { prio: 'media', prioText: 'Prioridad media', title: 'Protocolo de arbolado en focos de calor', desc: 'Intervención sobre 4 focos identificados. Cobertura arbórea objetivo: del 9% al 18% en 5 años. Costo acotado, respuesta medible en 2 temporadas.', h: '6–18 meses', e: 'Bajo', i: 'Medio-Alto', p: 'Medio ambiente' }
     ],
     retos: [
@@ -110,14 +110,14 @@ window.DATA = {
       { name: 'Servicios públicos', score: 68, status: 'ok', statusText: 'Aceptable', delta: '→ 0', vsPeers: '+12', icon: 'building' }
     ],
     kpis: [
-      { name: 'Cobertura vegetal urbana', value: '42,1', unit: '%', trend: 'up-good', trendText: '↑ +0,8 pp', delta: '21,6 m²/hab · referencia europea', interp: 'Liderazgo indiscutido. El Anillo Verde integra áreas naturales y rurales en una figura de planeamiento única.' },
+      { name: 'Cobertura vegetal urbana', value: '42,1', unit: '%', trend: 'up-good', trendText: '↑ +0,8 pp', delta: '42 m²/hab · referencia europea', interp: 'Liderazgo indiscutido. 100% de la población a menos de 300m de espacio verde. Anillo Verde: 613 ha + 130.000 árboles urbanos.' },
       { name: 'Calidad del aire (NO₂)', value: '18', unit: 'µg/m³', trend: 'up-good', trendText: '↓ -3%', delta: 'ya bajo directiva UE 2030', interp: 'Cumple anticipadamente umbrales 2030. Red de ciclocarriles y supermanzanas reducen tráfico motorizado.' },
       { name: 'Islas de calor urbanas', value: '+2,1', unit: '°C', trend: 'flat', trendText: 'Estable', delta: 'diferencial centro / periurbano', interp: 'Efecto de isla contenido por densidad arbórea. Menor de los 8 peers analizados.' },
       { name: 'Potencial solar en tejados', value: '285', unit: 'GWh/año', trend: 'up-good', trendText: '↑ 18% ejecutado', delta: '18% ya aprovechado', interp: 'Mejor ratio potencial / ejecución del peer group. Benchmarking energético para el resto del grupo.' },
       { name: 'Accesibilidad a servicios', value: '82', unit: '%', trend: 'up-good', trendText: '↑ +3 pp', delta: 'población a 15 min caminando', interp: 'Alta cobertura homogénea. Supermanzanas consolidan la proximidad de servicios esenciales.' },
       { name: 'Cobertura transporte público', value: '91', unit: '%', trend: 'up-good', trendText: '↑ +1 pp', delta: 'población a 300 m de parada', interp: 'Referencia nacional. Tranvía urbano, BRT y red de cercanías complementarias.' },
       { name: 'Expansión urbana', value: '+0,2', unit: '%', trend: 'flat', trendText: '→ estable', delta: 'suelo sellado anual', interp: 'Política de crecimiento hacia dentro. Prácticamente no hay suelo sellado nuevo en 5 años.' },
-      { name: 'Vivienda vacía detectable', value: '7,2', unit: '%', trend: 'up-good', trendText: '↓ -1,2 pp', delta: 'parque residencial', interp: 'Por debajo de media nacional. Mercado tensionado, oportunidad acotada de regeneración.' }
+      { name: 'Vivienda vacía detectable', value: '4,1', unit: '%', trend: 'up-good', trendText: '↓ -1,2 pp', delta: 'la más baja de España (INE 2021)', interp: 'Menor tasa de vivienda vacía del país junto a Madrid. Mercado tensionado, oportunidad de regeneración muy acotada.' }
     ],
     history: [ [2021, 70], [2022, 72], [2023, 74], [2024, 75], [2025, 76] ],
     histTrend: '↑ +6 pts', histTrendClass: 'ok',
@@ -187,7 +187,7 @@ window.DATA = {
       { name: 'Accesibilidad a servicios', value: '85', unit: '%', trend: 'up-good', trendText: '↑ +2 pp', delta: 'población a 15 min caminando', interp: 'Referencia nacional. Compacidad urbana y mixtura de usos generan alta proximidad.' },
       { name: 'Cobertura transporte público', value: '88', unit: '%', trend: 'up-good', trendText: '↑ +3 pp', delta: 'población a 300 m de parada', interp: 'Red Villavesa de alta frecuencia. Integración con cercanías y taxi compartido rural.' },
       { name: 'Expansión urbana', value: '+0,4', unit: '%', trend: 'flat', trendText: '→ estable', delta: 'crecimiento mayormente vertical', interp: 'Densificación controlada. Presión sobre área metropolitana (Burlada, Barañáin) fuera del ejido.' },
-      { name: 'Vivienda vacía detectable', value: '9,1', unit: '%', trend: 'flat', trendText: 'Estable', delta: 'en línea con media nacional', interp: 'Mercado tensionado por demanda universitaria y metropolitana. Vacancia mayoritariamente friccional.' }
+      { name: 'Vivienda vacía detectable', value: '4,7', unit: '%', trend: 'flat', trendText: 'Estable', delta: '2ª capital con menos vacías de España (INE 2021)', interp: 'Solo por detrás de Zaragoza (4,6%). Mercado tensionado por demanda universitaria y metropolitana. Vacancia friccional.' }
     ],
     history: [ [2021, 67], [2022, 68], [2023, 69], [2024, 69], [2025, 70] ],
     histTrend: '↑ +3 pts', histTrendClass: 'ok',
@@ -506,7 +506,7 @@ window.DATA = {
     tags: ['Área metropolitana', 'Reconversión industrial'],
     score: 74, status: 'ok', statusText: 'Bueno',
     tesis: 'El reto ya no es crecer sino distribuir valor: Bilbao concentra demanda mientras el área metropolitana requiere la misma regeneración que se logró en el núcleo hace 20 años.',
-    ejecutivo: 'Referente internacional de reconversión post-industrial. Modelo de crecimiento hacia dentro consolidado (+0,1% expansión), liderazgo absoluto en movilidad (81) y fortalezas distribuidas en los 5 pilares. Tensión residencial por alto atractivo urbano con vacancia en 8,4%, muy por debajo de la media nacional. Deuda ambiental industrial aún por remediar en Zorrozaurre.',
+    ejecutivo: 'Referente internacional de reconversión post-industrial. Modelo de crecimiento hacia dentro consolidado (+0,1% expansión), liderazgo absoluto en movilidad (81) y fortalezas distribuidas en los 5 pilares. Tensión residencial por alto atractivo urbano con vacancia en 5,5%, entre las más bajas de España. Deuda ambiental industrial aún por remediar en Zorrozaurre.',
     badges: [
       { type: 'premium', text: 'Premium ESG' },
       { type: 'esg', text: 'ESG Eligible' },
@@ -543,7 +543,7 @@ window.DATA = {
       { name: 'Accesibilidad a servicios', value: '86', unit: '%', trend: 'up-good', trendText: '↑ +2 pp', delta: 'compacidad metropolitana', interp: 'Densidad y metro garantizan altísima accesibilidad. Referente del estudio ampliado.' },
       { name: 'Cobertura transporte público', value: '94', unit: '%', trend: 'up-good', trendText: '↑ +1 pp', delta: 'metro + BUS + cercanías + tranvía', interp: 'Mejor cobertura del grupo ampliado. Sistema multimodal plenamente integrado.' },
       { name: 'Expansión urbana', value: '+0,1', unit: '%', trend: 'flat', trendText: '→ estable', delta: 'saturación territorial', interp: 'Suelo saturado por geografía. Crecimiento ocurre por regeneración interior, no por expansión externa.' },
-      { name: 'Vivienda vacía detectable', value: '8,4', unit: '%', trend: 'up-good', trendText: '↓ -0,8 pp', delta: 'mercado tensionado', interp: 'Por debajo de media nacional. Mercado tensionado por limitación de suelo y atractivo urbano.' }
+      { name: 'Vivienda vacía detectable', value: '5,5', unit: '%', trend: 'up-good', trendText: '↓ -0,8 pp', delta: 'entre las más bajas de España (INE 2021)', interp: 'Tercera capital con menos vacancia del país. Mercado tensionado por limitación de suelo y atractivo urbano.' }
     ],
     history: [ [2021, 70], [2022, 71], [2023, 72], [2024, 73], [2025, 74] ],
     histTrend: '↑ +4 pts', histTrendClass: 'ok',

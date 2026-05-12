@@ -455,7 +455,7 @@ window.DATA = {
       horizon: '36–60 meses',
       impact: 'Cubre riesgo físico sobre €1,2B de exposición hipotecaria. Primera operación Blended Finance climática urbana de BBVA en España.'
     },
-    peers: { vs: '+2 pts', vsClass: 'up', ccaa: '+6 pts', ccaaClass: 'up', yr: '+3 pts', yrClass: 'up', rank: 'Fuera de grupo peer' },
+    peers: { vs: '+2 pts', vsClass: 'up', ccaa: '+6 pts', ccaaClass: 'up', yr: '+3 pts', yrClass: 'up', rank: 'Fuera grupo' },
     pillars: [
       { name: 'Medio ambiente', score: 63, status: 'ok', statusText: 'Aceptable', delta: '→ 0', vsPeers: '-4', icon: 'leaf' },
       { name: 'Energía', score: 74, status: 'ok', statusText: 'Bueno', delta: '↑ +6', vsPeers: '+10', icon: 'zap' },
@@ -527,7 +527,7 @@ window.DATA = {
       horizon: '24–48 meses',
       impact: 'Transaction de referencia Europa. Abre pipeline de vivienda metropolitana en Euskadi (€500M+ estimados a 5 años).'
     },
-    peers: { vs: '+13 pts', vsClass: 'up', ccaa: '+7 pts', ccaaClass: 'up', yr: '+2 pts', yrClass: 'up', rank: 'Fuera de grupo peer' },
+    peers: { vs: '+13 pts', vsClass: 'up', ccaa: '+7 pts', ccaaClass: 'up', yr: '+2 pts', yrClass: 'up', rank: 'Fuera grupo' },
     pillars: [
       { name: 'Medio ambiente', score: 76, status: 'ok', statusText: 'Bueno', delta: '↑ +3', vsPeers: '+9', icon: 'leaf' },
       { name: 'Energía', score: 71, status: 'ok', statusText: 'Bueno', delta: '↑ +4', vsPeers: '+7', icon: 'zap' },

@@ -239,9 +239,33 @@
     const m = window.DATA[id];
     if (!m) return;
 
+    // Build context string for advisor
+    const ctx = [
+      `Municipio: ${m.name} (${m.region})`,
+      `Score: ${m.score}/100 — ${m.statusText}`,
+      `Pilares: ${m.pillars.map(p => p.name + ' ' + p.score + ' (' + p.vsPeers + ' vs peers)').join(' · ')}`,
+      `Tendencia: ${m.histTrend} en 5 años`,
+      `Tesis: ${m.tesis}`,
+    ].join('\n');
+
+    // Financial data (from data.js, not rendered in main UI)
+    const fin = m.financial || {};
+    const dec = m.decision || {};
+
     document.getElementById('content').innerHTML = `
       ${renderHero(m)}
       ${renderExecutive(m)}
+
+      <div class="action-bar">
+        <button class="action-btn" onclick="window.print()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Exportar PDF
+        </button>
+        <button class="action-btn primary" id="btnAdvisor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Analizar con Advisor BBVA
+        </button>
+      </div>
 
       <div class="tabs">
         <div class="tab active" data-tab="diagnostico"><span class="tab-num">1</span> Diagnóstico</div>
@@ -265,6 +289,73 @@
         ${renderRecs(m)}
         ${renderRetos(m)}
       </div>
+
+      <!-- ADVISOR MODAL -->
+      <div class="modal-overlay" id="advisorModal">
+        <div class="modal">
+          <div class="modal-header">
+            <div class="modal-header-title">Advisor BBVA · Análisis financiero</div>
+            <button class="modal-close" id="modalClose">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-section-label">Contexto enviado desde Urban Snapshot</div>
+            <div class="modal-context">${ctx}</div>
+
+            <div class="modal-loading" id="advisorLoading">
+              <div class="modal-spinner"></div>
+              <div>Procesando con Advisor BBVA...</div>
+            </div>
+
+            <div class="modal-result" id="advisorResult">
+              <div class="modal-section-label">Respuesta del Advisor</div>
+
+              ${fin.credit_risk ? `
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:14px;">
+                <div class="modal-result-card" style="border-left-color:${fin.credit_risk_class === 'ok' ? 'var(--ok)' : (fin.credit_risk_class === 'risk' ? 'var(--risk)' : 'var(--warn)')}">
+                  <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Riesgo crediticio</div>
+                  <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--ink);font-weight:500">${fin.credit_risk}</div>
+                  <div style="font-size:9.5px;color:var(--muted);margin-top:3px">${fin.credit_risk_note}</div>
+                </div>
+                <div class="modal-result-card" style="border-left-color:${fin.esg_class === 'ok' ? 'var(--ok)' : 'var(--warn)'}">
+                  <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Elegibilidad ESG</div>
+                  <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--ink);font-weight:500">${fin.esg_eligibility}</div>
+                  <div style="font-size:9.5px;color:var(--muted);margin-top:3px">${fin.esg_note}</div>
+                </div>
+                <div class="modal-result-card" style="border-left-color:${fin.green_class === 'ok' ? 'var(--ok)' : 'var(--warn)'}">
+                  <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Financiación verde</div>
+                  <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--ink);font-weight:500">${fin.green_finance}</div>
+                  <div style="font-size:9.5px;color:var(--muted);margin-top:3px">${fin.green_note}</div>
+                </div>
+                <div class="modal-result-card" style="border-left-color:var(--bbva-blue)">
+                  <div style="font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Ajuste de tasa</div>
+                  <div style="font-family:'Fraunces',serif;font-size:18px;color:var(--ink);font-weight:500">${fin.rate_adjustment}</div>
+                  <div style="font-size:9.5px;color:var(--muted);margin-top:3px">${fin.rate_note}</div>
+                </div>
+              </div>
+              ` : ''}
+
+              ${dec.headline ? `
+              <div class="modal-result-card">
+                <div style="font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--bbva-blue);font-weight:700;margin-bottom:8px">Decisión recomendada</div>
+                <div class="modal-result-title">${dec.headline}</div>
+                <div class="modal-result-text">${dec.rationale}</div>
+                <div class="modal-result-meta">
+                  <div class="modal-result-meta-item"><span class="k">Target</span><span class="v">${dec.target}</span></div>
+                  <div class="modal-result-meta-item"><span class="k">Producto</span><span class="v">${dec.product}</span></div>
+                  <div class="modal-result-meta-item"><span class="k">Ticket</span><span class="v">${dec.ticket}</span></div>
+                  <div class="modal-result-meta-item"><span class="k">Horizonte</span><span class="v">${dec.horizon}</span></div>
+                </div>
+              </div>
+              ` : ''}
+
+              <div class="modal-disclaimer">
+                Análisis generado por el Advisor interno de BBVA a partir del contexto provisto por Urban Snapshot (Bold). 
+                Estimación orientativa sujeta a validación por comité de crédito. Bold provee el diagnóstico; BBVA produce la recomendación financiera.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
 
     // Tab switching
@@ -275,6 +366,29 @@
         tab.classList.add('active');
         document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
       });
+    });
+
+    // Advisor modal
+    const modal = document.getElementById('advisorModal');
+    const loading = document.getElementById('advisorLoading');
+    const result = document.getElementById('advisorResult');
+
+    document.getElementById('btnAdvisor').addEventListener('click', () => {
+      modal.classList.add('open');
+      loading.classList.add('visible');
+      result.classList.remove('visible');
+      setTimeout(() => {
+        loading.classList.remove('visible');
+        result.classList.add('visible');
+      }, 2200);
+    });
+
+    document.getElementById('modalClose').addEventListener('click', () => {
+      modal.classList.remove('open');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('open');
     });
   };
 

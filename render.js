@@ -79,39 +79,126 @@
     `;
   }
 
-  // -------- Pillars --------
+  // -------- Radar Chart (SVG spider for 5 pillars) --------
+  function renderRadar(m) {
+    const cx = 140, cy = 140, r = 110;
+    const n = 5;
+    const labels = m.pillars.map(p => p.name.split(' ')[0]); // short labels
+    const scores = m.pillars.map(p => p.score);
+
+    function polar(angle, dist) {
+      const rad = (angle - 90) * Math.PI / 180;
+      return [cx + dist * Math.cos(rad), cy + dist * Math.sin(rad)];
+    }
+
+    // Grid rings
+    const rings = [20, 40, 60, 80, 100];
+    const gridLines = rings.map(pct => {
+      const pts = [];
+      for (let i = 0; i < n; i++) {
+        const [x, y] = polar(i * 360 / n, r * pct / 100);
+        pts.push(`${x},${y}`);
+      }
+      return `<polygon points="${pts.join(' ')}" fill="none" stroke="#E5E7EB" stroke-width="${pct === 60 ? 1.5 : 0.7}" ${pct === 60 ? 'stroke-dasharray="4,3"' : ''}/>`;
+    }).join('');
+
+    // Axes
+    const axes = [];
+    for (let i = 0; i < n; i++) {
+      const [x, y] = polar(i * 360 / n, r);
+      axes.push(`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#E5E7EB" stroke-width="0.7"/>`);
+    }
+
+    // Data polygon
+    const dataPts = [];
+    for (let i = 0; i < n; i++) {
+      const [x, y] = polar(i * 360 / n, r * scores[i] / 100);
+      dataPts.push(`${x},${y}`);
+    }
+
+    // Labels + scores
+    const lbls = [];
+    for (let i = 0; i < n; i++) {
+      const [x, y] = polar(i * 360 / n, r + 22);
+      const anchor = x < cx - 10 ? 'end' : (x > cx + 10 ? 'start' : 'middle');
+      const statusColor = m.pillars[i].status === 'ok' ? '#0B8A3B' : (m.pillars[i].status === 'risk' ? '#C4162A' : '#B77B00');
+      lbls.push(`<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Plus Jakarta Sans,sans-serif" font-size="9" fill="#6B7280" font-weight="600" letter-spacing="0.04em">${labels[i]}</text>`);
+      lbls.push(`<text x="${x}" y="${y + 13}" text-anchor="${anchor}" font-family="Fraunces,serif" font-size="14" fill="${statusColor}" font-weight="500">${scores[i]}</text>`);
+    }
+
+    // Dots on data points
+    const dots = [];
+    for (let i = 0; i < n; i++) {
+      const [x, y] = polar(i * 360 / n, r * scores[i] / 100);
+      dots.push(`<circle cx="${x}" cy="${y}" r="3.5" fill="#004481" stroke="white" stroke-width="1.5"/>`);
+    }
+
+    return `
+      <svg viewBox="0 0 280 280" class="radar-svg" xmlns="http://www.w3.org/2000/svg">
+        ${gridLines}
+        ${axes.join('')}
+        <polygon points="${dataPts.join(' ')}" fill="rgba(0,68,129,0.12)" stroke="#004481" stroke-width="2"/>
+        ${dots.join('')}
+        ${lbls.join('')}
+        <text x="${cx}" y="${cy + 4}" text-anchor="middle" font-family="Fraunces,serif" font-size="28" fill="#004481" font-weight="400">${m.score}</text>
+        <text x="${cx}" y="${cy + 16}" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="8" fill="#9CA3AF" letter-spacing="0.1em">SCORE</text>
+      </svg>
+    `;
+  }
+
+  // -------- Pillars (now side by side with radar) --------
   function renderPillars(m) {
     return `
       <div class="section">
         <div class="section-head"><h2>Pilares</h2><div class="aux">5 dimensiones</div></div>
-        <div class="pillars">
-          ${m.pillars.map(p => `
-            <div class="pillar">
-              <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${window.PILLAR_ICONS[p.icon]}</svg>
-              <div class="pillar-name">${p.name}</div>
-              <div class="pillar-score">${p.score}<span class="denom">/100</span></div>
-              <div class="pillar-bar"><div class="pillar-bar-fill ${p.status}" style="width:${p.score}%"></div></div>
-              <div class="pillar-status ${p.status}">${p.statusText}</div>
-              <div class="pillar-delta"><strong>${p.delta}</strong> vs 2023 · ${p.vsPeers} vs peers</div>
-            </div>
-          `).join('')}
+        <div class="radar-pillars-grid">
+          <div class="radar-wrap">
+            ${renderRadar(m)}
+          </div>
+          <div class="pillars-compact">
+            ${m.pillars.map(p => `
+              <div class="pillar-row">
+                <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${window.PILLAR_ICONS[p.icon]}</svg>
+                <div class="pillar-row-name">${p.name}</div>
+                <div class="pillar-row-bar"><div class="pillar-bar-fill ${p.status}" style="width:${p.score}%"></div></div>
+                <div class="pillar-row-score">${p.score}</div>
+                <div class="pillar-row-status ${p.status}">${p.statusText}</div>
+                <div class="pillar-row-delta">${p.delta} · ${p.vsPeers} vs peers</div>
+              </div>
+            `).join('')}
+          </div>
         </div>
       </div>
     `;
   }
 
-  // -------- KPIs --------
+  // -------- KPIs (grouped in 4 macro-containers) --------
   function renderKPIs(m) {
+    const groups = [
+      { label: 'Salud Ambiental', icon: '🌿', indices: [0, 1, 2] },
+      { label: 'Energía', icon: '⚡', indices: [3] },
+      { label: 'Territorio', icon: '🏘', indices: [6, 7] },
+      { label: 'Servicios', icon: '🚌', indices: [4, 5] },
+    ];
+
     return `
       <div class="section">
-        <div class="section-head"><h2>Indicadores clave</h2><div class="aux">8 señales</div></div>
-        <div class="kpi-grid">
-          ${m.kpis.map(k => `
-            <div class="kpi">
-              <div class="kpi-head"><div class="kpi-name">${k.name}</div><div class="trend ${k.trend}">${k.trendText}</div></div>
-              <div class="kpi-value">${k.value}<span class="unit">${k.unit}</span></div>
-              <div class="kpi-delta">${k.delta}</div>
-              <div class="kpi-interp">${k.interp}</div>
+        <div class="section-head"><h2>Indicadores clave</h2><div class="aux">8 señales · 4 dimensiones</div></div>
+        <div class="kpi-groups">
+          ${groups.map(g => `
+            <div class="kpi-group">
+              <div class="kpi-group-label"><span class="kpi-group-icon">${g.icon}</span> ${g.label}</div>
+              <div class="kpi-group-items">
+                ${g.indices.map(i => {
+                  const k = m.kpis[i];
+                  return `<div class="kpi">
+                    <div class="kpi-head"><div class="kpi-name">${k.name}</div><div class="trend ${k.trend}">${k.trendText}</div></div>
+                    <div class="kpi-value">${k.value}<span class="unit">${k.unit}</span></div>
+                    <div class="kpi-delta">${k.delta}</div>
+                    <div class="kpi-interp">${k.interp}</div>
+                  </div>`;
+                }).join('')}
+              </div>
             </div>
           `).join('')}
         </div>

@@ -1,5 +1,5 @@
 // ======================================================
-// TERRITORY SNAPSHOT · APP (selector UI + init)
+// URBAN SNAPSHOT v6 · APP
 // ======================================================
 
 (function() {
@@ -8,13 +8,10 @@
   const selectorInput = document.getElementById('selectorInput');
   const selectorDropdown = document.getElementById('selectorDropdown');
 
-  function statusClass(s) {
-    return s === 'ok' ? 'ok' : (s === 'risk' ? 'risk' : 'warn');
-  }
+  function statusClass(s) { return s === 'ok' ? 'ok' : (s === 'risk' ? 'risk' : 'warn'); }
 
   function renderDropdown(filter) {
     filter = (filter || '').toLowerCase();
-
     const items = Object.entries(window.DATA)
       .filter(([, m]) => m.name.toLowerCase().includes(filter))
       .sort((a, b) => b[1].score - a[1].score);
@@ -41,7 +38,6 @@
     selectorInput.value = `${m.name} · ${m.region}`;
     selector.classList.remove('open');
     window.renderSnapshot(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   selectorInput.addEventListener('click', () => {
@@ -53,7 +49,6 @@
     if (!selector.contains(e.target)) selector.classList.remove('open');
   });
 
-  // Init
   renderDropdown();
   selectMunicipality('valladolid');
 

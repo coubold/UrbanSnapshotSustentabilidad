@@ -206,37 +206,170 @@
     `;
   }
 
-  // -------- Bench --------
-  function renderBench(m, id) {
-    const peerScores = window.PEER_GROUP.map(pid => ({ id: pid, name: window.PEER_LABELS[pid], score: window.DATA[pid].score })).sort((a, b) => b.score - a.score);
-    const avg = (peerScores.reduce((s, p) => s + p.score, 0) / peerScores.length).toFixed(1);
+  // -------- Evolution (detailed: score + pillar-level changes) --------
+  function renderEvolution(m) {
+    // Parse pillar deltas to get previous year scores
+    function parseDelta(d) {
+      const match = d.match(/([+-]?\d+)/);
+      return match ? parseInt(match[1]) : 0;
+    }
+
+    const pillarEvolution = m.pillars.map(p => {
+      const delta = parseDelta(p.delta);
+      const prev = p.score - delta;
+      const dir = delta > 0 ? 'up' : (delta < 0 ? 'down' : 'flat');
+      return { name: p.name, icon: p.icon, score: p.score, prev, delta, dir, status: p.status };
+    });
+
+    // History chart (overall score)
     const trendColor = m.histTrendClass === 'ok' ? 'var(--ok)' : (m.histTrendClass === 'risk' ? 'var(--risk)' : 'var(--ink)');
 
     return `
       <div class="section">
-        <div class="section-head"><h2>Benchmarking</h2><div class="aux">Peers + histórico</div></div>
-        <div class="bench-grid">
+        <div class="section-head"><h2>Evolución del score</h2><div class="aux">Últimos 5 ciclos</div></div>
+        <div class="evo-grid">
           <div class="bench-card">
-            <div class="bench-title">Vs. peers</div><div class="bench-sub">Capitales CCAA</div>
-            <div class="bench-rows">
-              ${peerScores.map(ps => `<div class="bench-row">
-                <div class="city-name ${ps.id === id ? 'self' : ''}">${ps.name}</div>
-                <div class="bar-track"><div class="bar-fill ${ps.id === id ? 'self' : ''}" style="width:${ps.score}%"></div></div>
-                <div class="score-n ${ps.id === id ? 'self' : ''}">${ps.score}</div>
-              </div>`).join('')}
-            </div>
-            <div class="bench-avg-line"><span>Media</span><strong>${avg}</strong></div>
-          </div>
-          <div class="bench-card">
-            <div class="bench-title">Evolución</div><div class="bench-sub">5 ciclos</div>
+            <div class="bench-title">Score global</div>
+            <div class="bench-sub">Tendencia: <strong style="color:${trendColor}">${m.histTrend}</strong></div>
             <div class="histchart">
               ${m.history.map(([yr, sc], i) => `<div class="hist-row">
                 <div class="yr">${yr}</div>
                 <div class="hist-bar-track"><div class="hist-bar-fill ${i === m.history.length - 1 ? 'current' : ''}" style="width:${sc}%">${sc}</div></div>
               </div>`).join('')}
             </div>
-            <div class="bench-avg-line"><span>Tendencia</span><strong style="color:${trendColor}">${m.histTrend}</strong></div>
           </div>
+          <div class="bench-card">
+            <div class="bench-title">Cambio por pilar</div>
+            <div class="bench-sub">vs. ciclo anterior (2024 → 2025)</div>
+            <div class="evo-pillars">
+              ${pillarEvolution.map(p => `
+                <div class="evo-pillar-row">
+                  <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${window.PILLAR_ICONS[p.icon]}</svg>
+                  <div class="evo-pillar-name">${p.name}</div>
+                  <div class="evo-pillar-prev">${p.prev}</div>
+                  <div class="evo-pillar-arrow ${p.dir}">${p.dir === 'up' ? '→' : (p.dir === 'down' ? '→' : '→')}</div>
+                  <div class="evo-pillar-curr ${p.status}">${p.score}</div>
+                  <div class="evo-pillar-delta ${p.dir}">${p.delta > 0 ? '+' : ''}${p.delta}</div>
+                  <div class="evo-pillar-bar-wrap">
+                    <div class="evo-pillar-bar-prev" style="width:${p.prev}%"></div>
+                    <div class="evo-pillar-bar-curr ${p.status}" style="width:${p.score}%"></div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+      ${renderInsights(m)}
+      ${renderAlerts(m)}
+    `;
+  }
+
+  // -------- Ranking (new dedicated tab) --------
+  function renderRanking(m, id) {
+    const allIds = window.PEER_GROUP;
+    const peerScores = allIds.map(pid => ({
+      id: pid, name: window.PEER_LABELS[pid], score: window.DATA[pid].score
+    })).sort((a, b) => b.score - a.score);
+    const avg = (peerScores.reduce((s, p) => s + p.score, 0) / peerScores.length).toFixed(1);
+
+    // Overall ranking
+    const overallHtml = `
+      <div class="section">
+        <div class="section-head"><h2>Ranking global</h2><div class="aux">${peerScores.length} ayuntamientos</div></div>
+        <div class="bench-card">
+          <div class="bench-rows">
+            ${peerScores.map((ps, i) => `<div class="bench-row">
+              <div class="rank-num">${i + 1}.</div>
+              <div class="city-name ${ps.id === id ? 'self' : ''}">${ps.name}</div>
+              <div class="bar-track"><div class="bar-fill ${ps.id === id ? 'self' : ''}" style="width:${ps.score}%"></div></div>
+              <div class="score-n ${ps.id === id ? 'self' : ''}">${ps.score}</div>
+            </div>`).join('')}
+          </div>
+          <div class="bench-avg-line"><span>Media</span><strong>${avg}</strong></div>
+        </div>
+      </div>
+    `;
+
+    // Pillar-by-pillar comparison
+    const pillarNames = m.pillars.map(p => p.name);
+    const pillarIcons = m.pillars.map(p => p.icon);
+
+    const pillarCompareHtml = pillarNames.map((pName, pi) => {
+      const pillarData = allIds.map(pid => ({
+        id: pid,
+        name: window.PEER_LABELS[pid],
+        score: window.DATA[pid].pillars[pi].score,
+        status: window.DATA[pid].pillars[pi].status,
+      })).sort((a, b) => b.score - a.score);
+
+      const pAvg = (pillarData.reduce((s, p) => s + p.score, 0) / pillarData.length).toFixed(0);
+      const selfRank = pillarData.findIndex(p => p.id === id) + 1;
+      const selfScore = pillarData.find(p => p.id === id).score;
+      const leader = pillarData[0];
+      const gap = leader.score - selfScore;
+
+      return `
+        <div class="ranking-pillar-card">
+          <div class="ranking-pillar-header">
+            <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${window.PILLAR_ICONS[pillarIcons[pi]]}</svg>
+            <div class="ranking-pillar-title">${pName}</div>
+            <div class="ranking-pillar-position">#${selfRank} de ${pillarData.length}</div>
+          </div>
+          <div class="ranking-pillar-bars">
+            ${pillarData.slice(0, 5).map(p => `
+              <div class="ranking-bar-row">
+                <div class="ranking-bar-name ${p.id === id ? 'self' : ''}">${p.name}</div>
+                <div class="ranking-bar-track"><div class="ranking-bar-fill ${p.id === id ? 'self' : ''} ${p.status}" style="width:${p.score}%"></div></div>
+                <div class="ranking-bar-score ${p.id === id ? 'self' : ''}">${p.score}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="ranking-pillar-footer">
+            <span>Media: ${pAvg}</span>
+            <span>${gap > 0 ? `Gap vs líder (${leader.name}): -${gap} pts` : 'Lidera el grupo'}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Leads / Lags summary
+    const leads = m.pillars.filter(p => parseInt(p.vsPeers) > 0).sort((a, b) => parseInt(b.vsPeers) - parseInt(a.vsPeers));
+    const lags = m.pillars.filter(p => parseInt(p.vsPeers) < 0).sort((a, b) => parseInt(a.vsPeers) - parseInt(b.vsPeers));
+
+    const summaryHtml = `
+      <div class="section">
+        <div class="section-head"><h2>Fortalezas y brechas vs peers</h2><div class="aux">${m.name}</div></div>
+        <div class="leads-lags-grid">
+          <div class="leads-card">
+            <div class="leads-label ok">Lidera en</div>
+            ${leads.length > 0 ? leads.map(p => `
+              <div class="leads-item">
+                <div class="leads-item-name">${p.name}</div>
+                <div class="leads-item-delta ok">${p.vsPeers} pts</div>
+              </div>
+            `).join('') : '<div class="leads-item"><div class="leads-item-name" style="color:var(--muted)">Ningún pilar por encima de peers</div></div>'}
+          </div>
+          <div class="leads-card">
+            <div class="leads-label risk">Brecha en</div>
+            ${lags.length > 0 ? lags.map(p => `
+              <div class="leads-item">
+                <div class="leads-item-name">${p.name}</div>
+                <div class="leads-item-delta risk">${p.vsPeers} pts</div>
+              </div>
+            `).join('') : '<div class="leads-item"><div class="leads-item-name" style="color:var(--muted)">Sin brechas vs peers</div></div>'}
+          </div>
+        </div>
+      </div>
+    `;
+
+    return `
+      ${overallHtml}
+      ${summaryHtml}
+      <div class="section">
+        <div class="section-head"><h2>Comparación por pilar</h2><div class="aux">Top 5 por dimensión</div></div>
+        <div class="ranking-pillars-grid">
+          ${pillarCompareHtml}
         </div>
       </div>
     `;
@@ -357,7 +490,8 @@
       <div class="tabs">
         <div class="tab active" data-tab="diagnostico"><span class="tab-num">1</span> Diagnóstico</div>
         <div class="tab" data-tab="evolucion"><span class="tab-num">2</span> Evolución</div>
-        <div class="tab" data-tab="accion"><span class="tab-num">3</span> Plan de acción</div>
+        <div class="tab" data-tab="ranking"><span class="tab-num">3</span> Ranking</div>
+        <div class="tab" data-tab="accion"><span class="tab-num">4</span> Plan de acción</div>
       </div>
 
       <div class="tab-content active" id="tab-diagnostico">
@@ -367,9 +501,11 @@
       </div>
 
       <div class="tab-content" id="tab-evolucion">
-        ${renderBench(m, id)}
-        ${renderInsights(m)}
-        ${renderAlerts(m)}
+        ${renderEvolution(m)}
+      </div>
+
+      <div class="tab-content" id="tab-ranking">
+        ${renderRanking(m, id)}
       </div>
 
       <div class="tab-content" id="tab-accion">

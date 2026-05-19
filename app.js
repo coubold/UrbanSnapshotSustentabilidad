@@ -1,5 +1,6 @@
 // ======================================================
-// URBAN SNAPSHOT v6 · APP
+// URBAN SNAPSHOT v7 · APP
+// Starts with portfolio view, selector navigates in detail
 // ======================================================
 
 (function() {
@@ -10,12 +11,8 @@
 
   function statusClass(s) { return s === 'ok' ? 'ok' : (s === 'risk' ? 'risk' : 'warn'); }
 
-  function renderDropdown(filter) {
-    filter = (filter || '').toLowerCase();
-    const items = Object.entries(window.DATA)
-      .filter(([, m]) => m.name.toLowerCase().includes(filter))
-      .sort((a, b) => b[1].score - a[1].score);
-
+  function renderDropdown() {
+    const items = Object.entries(window.DATA).sort((a, b) => b[1].score - a[1].score);
     selectorDropdown.innerHTML = items.map(([id, m]) => `
       <div class="selector-item" data-id="${id}">
         <div>
@@ -28,16 +25,11 @@
     `).join('');
 
     selectorDropdown.querySelectorAll('.selector-item').forEach(el => {
-      el.addEventListener('click', () => selectMunicipality(el.dataset.id));
+      el.addEventListener('click', () => {
+        selector.classList.remove('open');
+        window.openDetail(el.dataset.id);
+      });
     });
-  }
-
-  function selectMunicipality(id) {
-    const m = window.DATA[id];
-    if (!m) return;
-    selectorInput.value = `${m.name} · ${m.region}`;
-    selector.classList.remove('open');
-    window.renderSnapshot(id);
   }
 
   selectorInput.addEventListener('click', () => {
@@ -49,7 +41,7 @@
     if (!selector.contains(e.target)) selector.classList.remove('open');
   });
 
-  renderDropdown();
-  selectMunicipality('valladolid');
+  // Init: show portfolio
+  window.renderPortfolio();
 
 })();
